@@ -1,0 +1,27 @@
+<?php
+require 'firebaseLib.php';
+$deviceId = $_GET["deviceid"];
+$latitude = $_GET["lat"];
+$longitude= $_GET["lon"];
+
+ 
+
+const DEFAULT_URL = 'https://trackit-fe7b0.firebaseio.com/';;
+const DEFAULT_TOKEN = 'jNSlOCPaMCnq51iFnOW5lkW7ngHRdGgQQXmovLJz';
+$DEFAULT_PATH = '/Tracker/devices/'.$deviceId;
+
+date_default_timezone_set('Europe/Warsaw');
+
+$_devicestatus= array(
+'latitude' => $latitude + 0.0,
+'longitude' => $longitude + 0.0,
+'lastUpdated' => date('Y-m-d H:i:s')
+);
+
+ 
+
+$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+$firebase->update($DEFAULT_PATH, $_devicestatus); // updates data in Firebase
+
+print("POST SUCCESSFUL");
+?>
