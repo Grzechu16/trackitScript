@@ -1,0 +1,24 @@
+<?php
+require 'firebaseLib.php';
+$deviceId = $_GET["deviceid"];
+$latitude = $_GET["lat"];
+$longitude= $_GET["lon"];
+$validGps= $_GET["valgps"];
+
+const FirebaseUrl = 'https://trackit-fe7b0.firebaseio.com/';;
+const FirebaseToken = 'jNSlOCPaMCnq51iFnOW5lkW7ngHRdGgQQXmovLJz';
+$DatabasePath = '/Tracker/devices/'.$deviceId;
+date_default_timezone_set('Europe/Warsaw');
+
+$gpsStatus= array(
+'latitude' => $latitude + 0.0,
+'longitude' => $longitude + 0.0,
+'updateTime' => date('Y-m-d H:i:s'),
+'queryTime' => date('Y-m-d H:i:s'),
+'validGps' => $validGps + 0.0
+);   
+
+$firebase = new \Firebase\FirebaseLib(FirebaseUrl, FirebaseToken);
+$firebase->update($DatabasePath, $gpsStatus);    
+
+?>
